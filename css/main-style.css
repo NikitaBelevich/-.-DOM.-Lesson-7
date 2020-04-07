@@ -1,0 +1,33 @@
+html, body {
+    font-family: serif;
+}
+body {
+    margin: 20px;
+    background-color: rgb(187, 187, 187);
+}
+input[type="number"]{
+    width: 80px;
+}
+
+.my-class {
+    color: red;
+}
+
+.task5 > .clock{
+    font-size: 2rem;
+}
+
+.task6 > .slider img{
+    width: 200px;
+}
+.task7 > .slider img{
+    width: 150px;
+}
+
+
+
+
+
+
+
+
