@@ -9,8 +9,9 @@ but1.addEventListener('click', () => {
 });
 
 function clear(elem) {
-    elem.firstElementChild.remove();
-    elem.lastElementChild.remove();
+    while (elem.children.length != 0) {
+        elem.firstElementChild.remove();
+    }
 }
 
 
