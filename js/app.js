@@ -90,25 +90,25 @@ but3.addEventListener('click', () => {
 
 
 function createTree(elem, dataList) {
-    
-    elem.insertAdjacentHTML('beforeend', `<ul>${createRecList(dataList)}</ul>`);
+    elem.append(createRecList(dataList));
 }
 
-
-
 function createRecList(dataList) {
-    let listStr = '';
-    let arrKeys = Object.keys(dataList);
     
-        for (const key in dataList) {
-            if (typeof dataList[key] == 'object' && Object.keys(dataList[key]).length != 0) {
-                listStr += `<li>${key}<ul>${createRecList(dataList[key])}</ul></li>`;
-            } else {
-                listStr += `<li>${key}</li>`;
-            }
+    let ulNode = document.createElement('ul');
+
+    for (const key in dataList) {
+        let liNode = document.createElement('li');
+        liNode.innerHTML = key;
+        if (typeof dataList[key] == 'object' && Object.keys(dataList[key]).length != 0) {
+            liNode.append(createRecList(dataList[key]));
+            ulNode.append(liNode);
+        } else {
+            ulNode.append(liNode);
         }
-        
-    return listStr;
+    }
+
+     return ulNode;   
 }
 
 
