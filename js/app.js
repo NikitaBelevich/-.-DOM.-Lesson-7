@@ -112,10 +112,29 @@ function createRecList(dataList) {
 }
 
 
+/* 
+Task 4. Выведите список потомков в дереве
+Есть дерево, организованное в виде вложенных списков ul/li. <br>
 
+Напишите код, который добавит каждому элементу списка li количество вложенных в него элементов. Узлы нижнего уровня, без детей – пропускайте.
+*/
+let divTask4 = document.querySelector('.task4');
+const but4 = document.querySelector('.task4 button');
+but4.addEventListener('click', () => {
+    let targetList = document.querySelector('.task4 > ul');
+    addCountElemInLi(targetList);
+});
 
-
-
+function addCountElemInLi(list) {
+    Array.from(list.children).forEach((elem) => {
+        if (elem.constructor.name == 'HTMLLIElement' && elem.children.length != 0) {
+            // let firstTextNode = elem.firstChild.data;
+            let quantityChildLi = elem.querySelectorAll('li').length;
+            elem.firstChild.data += `[${quantityChildLi}]`;
+        }
+        addCountElemInLi(elem);
+    });
+}
 
 
 
