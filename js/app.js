@@ -53,14 +53,63 @@ function generateList(targetElement) {
     }
 }
 
+/* 
+Task 3. Создайте дерево из объекта. Напишите функцию createTree, которая создаёт вложенный список ul/li из объекта.
+Выберите один из двух способов решения этой задачи: <br>
+
+Создать строку, а затем присвоить через container.innerHTML. <br>
+Создавать узлы через методы DOM. <br>
+Если получится – сделайте оба. <br>
+
+P.S. Желательно, чтобы в дереве не было лишних элементов, в частности -– пустых ul  на нижнем уровне.
+*/
+
+let dataList3 = {
+    "Рыбы": {
+        "форель": {},
+        "лосось": {}
+    },
+
+    "Деревья": {
+        "Огромные": {
+            "секвойя": {},
+            "дуб": {}
+        },
+        "Цветковые": {
+            "яблоня": {},
+            "магнолия": {}
+        }
+    }
+};
+
+let divTask3 = document.querySelector('.task3');
+const but3 = document.querySelector('.task3 button');
+but3.addEventListener('click', () => {
+    createTree(divTask3, dataList3);
+});
+
+
+function createTree(elem, dataList) {
+    
+    elem.insertAdjacentHTML('beforeend', `<ul>${createRecList(dataList)}</ul>`);
+}
 
 
 
-
-
-
-
-
+function createRecList(dataList) {
+    let listStr = '';
+    let arrKeys = Object.keys(dataList);
+    
+        for (const key in dataList) {
+            if (typeof dataList[key] == 'object' && Object.keys(dataList[key]).length != 0) {
+                listStr += `<li>${key}<ul>${createRecList(dataList[key])}</ul></li>`;
+            } else {
+                listStr += `<li>${key}</li>`;
+            }
+        }
+        
+    return listStr;
+}
 
 
 
