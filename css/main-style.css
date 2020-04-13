@@ -3,30 +3,30 @@ html, body {
 }
 body {
     margin: 20px;
-    background-color: rgb(187, 187, 187);
+    /* background-color: rgb(228, 228, 228); */
 }
 input[type="number"]{
     width: 80px;
 }
 
-.my-class {
-    color: red;
+
+.table-calendar{
+    margin-top: 10px;
+    border-collapse: collapse;
 }
-
-.task5 > .clock{
-    font-size: 2rem;
+.table-calendar td, th{
+    width: 16px;
+    height: 18px;
+    padding: 3px;
+    text-align: center;
+    border: 1px solid #000;
 }
-
-.task6 > .slider img{
-    width: 200px;
+.table-calendar__th{
+    background-color: #d6d6d6;
 }
-.task7 > .slider img{
-    width: 150px;
+.table-calendar__th-weekends{
+    background-color: #ff97ab;
 }
-
-
-
-
 
 
 

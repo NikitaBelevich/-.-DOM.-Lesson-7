@@ -137,12 +137,97 @@ function addCountElemInLi(list) {
 }
 
 
+/* 
+Task 5. Создайте календарь в виде таблицы
+Напишите функцию createCalendar(elem, year, month). 
 
+Вызов функции должен создать календарь для заданного месяца month в году year и вставить его в elem. 
 
+Календарь должен быть таблицей, где неделя – это <tr>, а день – это <td>. У таблицы должен быть заголовок с названиями дней недели, каждый день – <th>, первым днём недели должен быть понедельник. 
+Например, createCalendar(cal, 2012, 9) сгенерирует в cal следующий календарь: 
+*/
+let divTask5 = document.querySelector('.task5');
+const but5 = document.querySelector('.task5 button');
+but5.addEventListener('click', () => {
+    let inputDate = document.querySelector('.task5 input').value;
 
+    removeOldCalendar(divTask5, '.table-calendar'); //? Функция для удаления старой таблицы
+    if (inputDate) createCalendar(divTask5, ...inputDate.split('-')); // расширяем на отдельные элементы
+});
 
+function createCalendar(elem, year, month) {
+    month = createCalendar.getFormattingMonth(month) - 1;
 
+    // сгенерировали и добавили таблицу
+    const tableCalendar = document.createElement('table');
+    tableCalendar.classList.add('table-calendar');
+    elem.append(tableCalendar); 
 
+    // TODO Блок работы с экземпляром даты --------------
+    let receivedDate = new Date(year, month + 1); //* следующий месяц, первый день
+    receivedDate.setDate(receivedDate.getDate() - 1); //* отняли день, получили последний день предыдущего месяца, который и установили в дату
+    let lastDayMonth = receivedDate.getDate(); //* получили последний день месяца переданной даты
+    receivedDate.setDate(1); // ! Снова поменяли день месяца на первый
+    let numberWeekDay = receivedDate.getDay(); //* получили номер первого дня недели переданного месяца
+    // TODO Блок работы с экземпляром даты --------------
 
+    const weekDays = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']; // для наших th
+    
+    // TODO Блок генерации строк и ячеек --------------
+    for (let i = 0; i <= 6; i++) { // создаём tr
+        let trWeek = document.createElement('tr');
+        for (let k = 0; k < 7; k++) { // создаём th, td
+            if (i == 0) { // первая строка, добавляем th
+                let thDay = document.createElement('th');
+                trWeek.append(thDay);
+                thDay.textContent = weekDays[k];
+                const thText = thDay.textContent;
+                // добавляем классы с цветом фона заголовков
+                if (thText.includes(weekDays[5]) || thText.includes(weekDays[6])) {
+                    thDay.classList.add('table-calendar__th-weekends');
+                } else {
+                    thDay.classList.add('table-calendar__th');
+                }
+            } else {
+                let tdDay = document.createElement('td');
+                trWeek.append(tdDay);
+            }
+        }
+        tableCalendar.append(trWeek);
+    }
+    // TODO Блок генерации строк и ячеек --------------
 
+    console.group('Отладочная информация');
+    console.log('Последний день выбранного месяца: ', lastDayMonth);
+    console.log('Номер дня недели 1 числа месяца: ', numberWeekDay);
+    console.groupEnd('Отладочная информация');
 
+    // TODO Блок заполнения календаря --------------
+    const allCells = tableCalendar.querySelectorAll('td');
+    for (let i = 1; i <= lastDayMonth; i++) { //* заполняем от 1 дня, до последнего дня переданного месяца
+        let startingPosition = (numberWeekDay == 0) ? (i + 5) : (i + numberWeekDay) - 2;
+        allCells[startingPosition].textContent = i;
+        /* 
+            * Начинаем заполнять календарь, начиная с ячейки, номер которой в коллекции соответствует numberWeekDay,
+            * т.е начинаем с numberWeekDay, но т.к нумерация номеров дней недели и нумерация NodeList ячеек таблицы с 0,
+            * то отнимаем от индекса лишние единицы (минус 2) от переменной счётчика и от numberWeekDay
+            * (i + 5) в случае если первый день месяца это воскресенье, и мы начинаем вывод с последней ячейки
+            * 
+        */
+    }
+    // TODO Блок заполнения календаря --------------
+    removeLastRow(tableCalendar); //* удаляем последнюю tr если в ней нет дат
+}
+createCalendar.getFormattingMonth = function(month) { // внутренний метод нашей функции
+    return (month.startsWith(0)) ? month[1] : month;
+}
+function removeOldCalendar(elem, classTable) {
+    const oldCalendar = elem.querySelector(classTable);
+    if (oldCalendar) oldCalendar.remove(); //* если таблица была, значит удаляем её
+}
+function removeLastRow(tableCalendar) {
+    const lastRowTable = tableCalendar.lastElementChild;
+    if (!lastRowTable.firstElementChild.textContent) {
+        lastRowTable.remove();
+    }
+}
