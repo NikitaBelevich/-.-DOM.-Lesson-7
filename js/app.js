@@ -231,3 +231,44 @@ function removeLastRow(tableCalendar) {
         lastRowTable.remove();
     }
 }
+
+//Task 6. Цветные часы с использованием setInterval
+const buttonStart = document.querySelector('.task6 .btn-start');
+const buttonStop = document.querySelector('.task6 .btn-stop');
+
+buttonStart.addEventListener('click', () => {
+    const [ 
+        hoursNode,
+        minutesNode,
+        secondsNode
+    ] = document.querySelector('.task6 .clock').children; //* наши цветные span
+
+    colorTime(hoursNode, minutesNode, secondsNode);
+});
+
+function colorTime(hoursNode, minutesNode, secondsNode) {
+    
+    let timerId = setTimeout(function tickTime() {
+        
+        const currentDate = new Date();
+
+        let hours = currentDate.getHours();
+        hours = (hours < 10) ? `0${hours}` : hours;
+        hoursNode.textContent = hours;
+
+        let minutes = currentDate.getMinutes();
+        minutes = (minutes < 10) ? `0${minutes}` : minutes;
+        minutesNode.textContent = minutes;
+
+        let seconds = currentDate.getSeconds();
+        seconds = (seconds < 10) ? `0${seconds}` : seconds;
+        secondsNode.textContent = seconds;
+
+        timerId = setTimeout(tickTime, 1000);
+    });
+
+    buttonStop.addEventListener('click', () => {
+        clearTimeout(timerId);
+    });
+}
+

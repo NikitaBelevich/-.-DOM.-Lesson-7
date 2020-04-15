@@ -29,5 +29,18 @@ input[type="number"]{
 }
 
 
+.clock {
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+}
+.hours {
+    color: rgb(255, 0, 64);
+}
+.minutes {
+    color: rgb(34, 175, 6);
+}
+.seconds {
+    color: blue;
+}
 
 
