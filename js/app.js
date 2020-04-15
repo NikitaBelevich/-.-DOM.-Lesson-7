@@ -272,3 +272,16 @@ function colorTime(hoursNode, minutesNode, secondsNode) {
     });
 }
 
+
+// Task 7. Вставьте HTML в список
+const buttonInsert = document.querySelector('.task7 button');
+buttonInsert.addEventListener('click', insertItemList);
+
+function insertItemList() {
+    let list = document.querySelector('#ul');
+    let firstItem = list.firstElementChild;
+    firstItem.insertAdjacentHTML('afterend', '<li>2</li><li>3</li>');
+
+    this.removeEventListener('click', insertItemList);
+}
+
